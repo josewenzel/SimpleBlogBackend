@@ -4,11 +4,11 @@ import dev.wenzel.domain.model.Post
 import dev.wenzel.domain.ports.PostRepository
 
 class FakePostRepository : PostRepository {
+    private val store = HashMap<String, Post>()
+
     override fun add(post: Post) {
-        TODO("Not yet implemented")
+        store[post.slug] = post
     }
 
-    override fun getAll(): List<Post> {
-        TODO("Not yet implemented")
-    }
+    override fun getBySlug(slug: String): Post = store[slug]!!
 }

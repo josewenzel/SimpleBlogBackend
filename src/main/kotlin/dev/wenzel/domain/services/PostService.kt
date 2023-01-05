@@ -2,13 +2,12 @@ package dev.wenzel.domain.services
 
 import dev.wenzel.domain.model.Post
 import dev.wenzel.domain.ports.PostRepository
+import dev.wenzel.domain.validators.PostValidator
 
-class PostService(postRepository: PostRepository) {
+class PostService(private val postRepository: PostRepository, val postValidator: PostValidator) {
     fun addNewPost(post: Post) {
-        TODO("Not yet implemented")
+        postRepository.add(post)
     }
 
-    fun getAllPosts(): List<Post> {
-        TODO("Not yet implemented")
-    }
+    fun getBySlug(slug: String): Post = postRepository.getBySlug(slug)
 }

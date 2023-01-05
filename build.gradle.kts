@@ -3,6 +3,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 val strikt_version: String by project
 val mockk_version: String by project
+val jetbrains_markdown_version: String by project
 
 plugins {
     kotlin("jvm") version "1.8.0"
@@ -32,8 +33,9 @@ dependencies {
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
-    implementation("io.strikt:strikt-core:$strikt_version")
-    implementation("io.mockk:mockk-core:$mockk_version")
+    implementation("org.jetbrains:markdown:$jetbrains_markdown_version")
+    testImplementation("io.strikt:strikt-core:$strikt_version")
+    testImplementation("io.mockk:mockk:$mockk_version")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
