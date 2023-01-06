@@ -10,5 +10,9 @@ class FakePostRepository : PostRepository {
         store[post.slug] = post
     }
 
-    override fun getBySlug(slug: String): Post = store[slug]!!
+    override fun getBySlug(slug: String): Post? = store[slug]
+
+    fun flush() {
+        store.clear()
+    }
 }

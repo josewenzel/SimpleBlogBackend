@@ -1,5 +1,6 @@
 package dev.wenzel.domain.services
 
+import dev.wenzel.domain.exceptions.DuplicatedSlugException
 import dev.wenzel.domain.exceptions.InvalidSlugException
 import dev.wenzel.domain.model.Post
 import dev.wenzel.domain.ports.PostRepository
@@ -9,8 +10,12 @@ class PostService(private val postRepository: PostRepository, private val postVa
     fun addNewPost(post: Post) {
         if (!postValidator.isValidSlug(post.slug))
             throw InvalidSlugException("'${post.slug}' is not a valid slug'}")
+        if (slugAlreadyExists(post))
+            throw DuplicatedSlugException("'${post.slug}' slug already exists")
         postRepository.add(post)
     }
 
-    fun getBySlug(slug: String): Post = postRepository.getBySlug(slug)
+    private fun slugAlreadyExists(post: Post) = postRepository.getBySlug(post.slug) != null
+
+    fun getBySlug(slug: String): Post? = postRepository.getBySlug(slug)
 }

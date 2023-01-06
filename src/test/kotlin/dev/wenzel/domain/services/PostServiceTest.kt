@@ -1,5 +1,6 @@
 package dev.wenzel.domain.services
 
+import dev.wenzel.domain.exceptions.DuplicatedSlugException
 import dev.wenzel.domain.ports.PostRepository
 import dev.wenzel.domain.validators.PostValidator
 import dev.wenzel.util.createValidDummyPost
@@ -7,8 +8,11 @@ import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import strikt.api.expectCatching
 import strikt.api.expectThat
+import strikt.assertions.isA
 import strikt.assertions.isEqualTo
+import strikt.assertions.isFailure
 
 class PostServiceTest {
     private val postValidator = spyk<PostValidator>()
@@ -34,5 +38,15 @@ class PostServiceTest {
         val postBySlug = postService.getBySlug(post.slug)
 
         expectThat(post).isEqualTo(postBySlug)
+    }
+
+    @Test
+    fun `doesn't allow to create a post with a slug that exists`() {
+        val post = createValidDummyPost()
+        every { postRepository.getBySlug(post.slug) } returns post
+
+        expectCatching { postService.addNewPost(post) }
+            .isFailure()
+            .isA<DuplicatedSlugException>()
     }
 }
