@@ -11,3 +11,11 @@ fun createValidDummyPost(): Post = Post(
     body = "This is a valid blog post body :)",
     tags = listOf()
 )
+
+fun createInvalidSlugDummyPost(): Post = Post(
+    slug="invalid slug",
+    title="Valid Title",
+    createdAt = LocalDate.of(2023,Month.JANUARY,1),
+    body = "This is a valid blog post body :)",
+    tags = listOf()
+)

@@ -6,7 +6,7 @@ import dev.wenzel.util.createValidDummyPost
 import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 
@@ -19,7 +19,7 @@ class PostServiceTest {
     @Test
     fun `requests the repository to add new valid post`() {
         val post = createValidDummyPost()
-        every { postValidator.isValidMarkdown(post.body) } returns true
+        every { postValidator.isValidSlug(post.slug) } returns true
 
         postService.addNewPost(post)
 

@@ -1,15 +1,12 @@
-package dev.wenzel
+package dev.wenzel.application
 
-import io.ktor.server.routing.*
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.request.*
+import dev.wenzel.application.plugins.configureRouting
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import kotlin.test.*
+import io.ktor.http.*
 import io.ktor.server.testing.*
-import dev.wenzel.plugins.*
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class ApplicationTest {
     @Test

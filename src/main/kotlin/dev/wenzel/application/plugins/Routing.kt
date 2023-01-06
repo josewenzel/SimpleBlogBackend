@@ -1,4 +1,4 @@
-package dev.wenzel.plugins
+package dev.wenzel.application.plugins
 
 import io.ktor.server.routing.*
 import io.ktor.http.*
