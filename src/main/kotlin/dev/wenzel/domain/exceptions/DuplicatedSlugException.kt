@@ -1,3 +1,3 @@
 package dev.wenzel.domain.exceptions
 
-class DuplicatedSlugException(message: String) : RuntimeException(message)
+class DuplicatedSlugException(slug: String) : RuntimeException("'${slug}' slug already exists")

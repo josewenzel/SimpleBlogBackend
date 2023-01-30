@@ -1,3 +1,3 @@
 package dev.wenzel.domain.exceptions
 
-class InvalidSlugException(message: String) : RuntimeException(message)
+class InvalidSlugException(slug: String) : RuntimeException("'${slug}' is not a valid slug")

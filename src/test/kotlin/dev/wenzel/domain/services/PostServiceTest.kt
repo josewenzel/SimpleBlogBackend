@@ -1,6 +1,7 @@
 package dev.wenzel.domain.services
 
 import dev.wenzel.domain.exceptions.DuplicatedSlugException
+import dev.wenzel.domain.exceptions.PostDoesNotExistException
 import dev.wenzel.domain.ports.PostRepository
 import dev.wenzel.domain.validators.PostValidator
 import dev.wenzel.util.createValidDummyPost
@@ -23,7 +24,7 @@ class PostServiceTest {
     @Test
     fun `requests the repository to add new valid post`() {
         val post = createValidDummyPost()
-        every { postValidator.isValidSlug(post.slug) } returns true
+        every { postValidator.validateSlug(post.slug) } returns true
 
         postService.addNewPost(post)
 
@@ -48,5 +49,25 @@ class PostServiceTest {
         expectCatching { postService.addNewPost(post) }
             .isFailure()
             .isA<DuplicatedSlugException>()
+    }
+
+    @Test
+    fun `requests the repository to update an existing post`() {
+        val post = createValidDummyPost()
+        every { postRepository.getBySlug(post.slug) } returns post
+
+        postService.updatePost(post.slug, post)
+
+        verify { postRepository.update(post.slug, post) }
+    }
+
+    @Test
+    fun `doesn't allow to update a post that does not exist`() {
+        val post = createValidDummyPost()
+        every { postRepository.getBySlug(post.slug) } returns null
+
+        expectCatching { postService.updatePost(post.slug, post) }
+            .isFailure()
+            .isA<PostDoesNotExistException>()
     }
 }
