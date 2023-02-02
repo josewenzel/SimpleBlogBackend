@@ -16,6 +16,10 @@ class FakePostRepository : PostRepository {
         store[post.slug] = post
     }
 
+    override fun delete(slug: String) {
+        store.remove(slug)
+    }
+
     fun flush() {
         store.clear()
     }

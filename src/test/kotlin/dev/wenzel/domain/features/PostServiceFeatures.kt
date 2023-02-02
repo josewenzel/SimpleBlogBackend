@@ -85,4 +85,17 @@ class PostServiceFeatures {
                 .isA<PostDoesNotExistException>()
         }
     }
+
+    @Nested
+    inner class RemovingAPost {
+        @Test
+        fun `makes it no longer available to the system`() {
+            val post = createRepoWithOnePost(postRepository)
+
+            postService.deletePost(post.slug)
+
+            val actualPost = postService.getBySlug(post.slug)
+            expectThat(actualPost).isEqualTo(null)
+        }
+    }
 }

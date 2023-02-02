@@ -70,4 +70,11 @@ class PostServiceTest {
             .isFailure()
             .isA<PostDoesNotExistException>()
     }
+
+    @Test
+    fun `requests the repository to delete a post`() {
+        postService.deletePost(slugToDelete = "aSlug")
+
+        verify { postRepository.delete("aSlug") }
+    }
 }

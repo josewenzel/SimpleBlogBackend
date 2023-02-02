@@ -22,5 +22,9 @@ class PostService(private val postRepository: PostRepository, private val postVa
         postRepository.update(slugToBeUpdated, updatedPost)
     }
 
+    fun deletePost(slugToDelete: String) {
+        postRepository.delete(slugToDelete)
+    }
+
     private fun postAlreadyExists(post: Post) = postRepository.getBySlug(post.slug) != null
 }
